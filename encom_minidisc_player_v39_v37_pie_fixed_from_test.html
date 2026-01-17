@@ -1,0 +1,2514 @@
+<!doctype html>
+<html lang="en" data-theme=\"encom\">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ENCOM MINI-DISC INTERFACE (Gap + Modes + Session)</title>
+  <style>
+    :root{
+      color-scheme: dark;
+      /* Base tokens (overridden by themes below) */
+      --bg:#02050a;
+      --bg2:#030a14;
+      --panel:rgba(3, 14, 28, 0.78);
+      --panel2:rgba(2, 10, 22, 0.72);
+      --ink:#d9f3ff;
+      --muted:#7fd7ff;
+      --line:rgba(127,215,255,0.18);
+      --line2:rgba(127,215,255,0.32);
+      --glow: rgba(127,215,255,0.45);
+      --accent:#7fd7ff;
+      --accent2:#ffb020;
+      --ok:#7CFFB2;
+      --warn:#ffb020;
+      --bad:#ff4d7d;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --grid: var(--grid);
+      --scan: var(--scan);
+      --scan2: var(--scan2);
+      --shadow: var(--shadow);
+    }
+
+    /* Theme: ENCOM (cyan) */
+    html[data-theme="encom"]{
+      --bg:#02050a;
+      --bg2:#030a14;
+      --panel:rgba(3, 14, 28, 0.78);
+      --panel2:rgba(2, 10, 22, 0.72);
+      --ink:#d9f3ff;
+      --muted:#7fd7ff;
+      --line:rgba(127,215,255,0.18);
+      --line2:rgba(127,215,255,0.32);
+      --glow: rgba(127,215,255,0.45);
+      --accent:#7fd7ff;
+      --accent2:#ffb020;
+      --ok:#7CFFB2;
+      --warn:#ffb020;
+      --bad:#ff4d7d;
+      --grid: var(--grid);
+      --scan: var(--scan);
+      --scan2: var(--scan2);
+      --shadow: var(--shadow);
+    }
+
+    /* Theme: DILLINGER SYSTEMS (TRON: Ares red/black vibe) */
+    html[data-theme="ares"]{
+      --bg:#050003;
+      --bg2:#120009;
+      --panel:rgba(22, 0, 10, 0.78);
+      --panel2:rgba(12, 0, 6, 0.74);
+      --ink:#ffd6e0;
+      --muted:#ff4b6e;
+      --line:rgba(255,75,110,0.20);
+      --line2:rgba(255,75,110,0.38);
+      --glow: rgba(255,75,110,0.45);
+      --accent:#ff2a55;
+      --accent2:#ff9f1c;
+      --ok:#ff7aa3;
+      --warn:#ff9f1c;
+      --bad:#ff2a55;
+      --grid: rgba(255,75,110,0.09);
+      --scan: rgba(255,75,110,0.06);
+      --scan2: rgba(0,0,0,0.00);
+      --shadow: rgba(255,75,110,0.14);
+    }
+
+    /* Theme: MATRIX (green) */
+    html[data-theme="matrix"]{
+      --bg:#000a03;
+      --bg2:#00170a;
+      --panel:rgba(0, 20, 10, 0.78);
+      --panel2:rgba(0, 14, 7, 0.74);
+      --ink:#c9ffd9;
+      --muted:#39ff88;
+      --line:rgba(57,255,136,0.18);
+      --line2:rgba(57,255,136,0.32);
+      --glow: rgba(57,255,136,0.45);
+      --accent:#39ff88;
+      --accent2:#a7ff3a;
+      --ok:#39ff88;
+      --warn:#a7ff3a;
+      --bad:#ff4d7d;
+      --grid: rgba(57,255,136,0.08);
+      --scan: rgba(57,255,136,0.05);
+      --scan2: rgba(0,0,0,0.00);
+      --shadow: rgba(57,255,136,0.12);
+    }
+
+    /* Theme: Pokémon Gengar (purple noir) */
+    html[data-theme="gengar"]{
+      --bg:#070012;
+      --bg2:#140024;
+      --panel:rgba(20, 0, 35, 0.78);
+      --panel2:rgba(14, 0, 24, 0.74);
+      --ink:#f3e9ff;
+      --muted:#c7a6ff;
+      --line:rgba(190,120,255,0.20);
+      --line2:rgba(190,120,255,0.34);
+      --glow: rgba(190,120,255,0.45);
+      --accent:#c084fc; /* lavender */
+      --accent2:#ff5fb7; /* mischievous pink highlight */
+      --ok:#b7ffcf;
+      --warn:#ffd166;
+      --bad:#ff4d7d;
+      --grid: rgba(190,120,255,0.08);
+      --scan: rgba(190,120,255,0.05);
+      --scan2: rgba(0,0,0,0.00);
+      --shadow: rgba(190,120,255,0.12);
+    }
+
+    /* Theme: Sony Walkman MZ-R700 (green 'portable tech' vibe) */
+    html[data-theme="walkman"]{
+      --bg:#020606;
+      --bg2:#031111;
+      --panel:rgba(2, 18, 16, 0.78);
+      --panel2:rgba(2, 12, 10, 0.74);
+      --ink:#e6fff2;
+      --muted:#7cffc5;
+      --line:rgba(124,255,197,0.16);
+      --line2:rgba(124,255,197,0.28);
+      --glow: rgba(124,255,197,0.42);
+      --accent:#00ff9a; /* Walkman-lcd green */
+      --accent2:#a7ff3a;
+      --ok:#00ff9a;
+      --warn:#a7ff3a;
+      --bad:#ff4d7d;
+      --grid: rgba(0,255,154,0.06);
+      --scan: rgba(0,255,154,0.04);
+      --scan2: rgba(0,0,0,0.00);
+      --shadow: rgba(0,255,154,0.10);
+    }
+
+    /* Theme: macOS Sequoia (soft glass + warm daylight) */
+    html[data-theme="sequoia"]{
+      --bg:#0b1020;
+      --bg2:#0a1631;
+      --panel:rgba(255,255,255,0.10);
+      --panel2:rgba(255,255,255,0.07);
+      --ink:#f6f7ff;
+      --muted:rgba(246,247,255,0.78);
+      --line:rgba(255,255,255,0.18);
+      --line2:rgba(255,255,255,0.28);
+      --glow: rgba(120,160,255,0.35);
+      --accent:#79a7ff;   /* macOS accent-ish */
+      --accent2:#ffb3d9;  /* subtle rose */
+      --ok:#86efac;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --grid: rgba(255,255,255,0.00); /* no grid */
+      --scan: rgba(255,255,255,0.00); /* no scan */
+      --scan2: rgba(255,255,255,0.00);
+      --shadow: rgba(0,0,0,0.35);
+    }
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 900px at 18% 10%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, rgba(0,0,0,0) 58%),
+        radial-gradient(900px 700px at 85% 15%, color-mix(in srgb, var(--accent2) 12%, transparent) 0%, rgba(0,0,0,0) 62%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:18px;
+      overflow-x:hidden;
+    }
+
+    /* ENCOM-ish grid */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-2px;
+      background:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(circle at 25% 0%, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0) 76%);
+      pointer-events:none;
+      z-index:-2;
+    }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background: radial-gradient(900px 600px at 50% 0%, rgba(127,215,255,0.10) 0%, rgba(0,0,0,0) 70%);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .app{
+      position: relative;
+      z-index: 2;
+      overflow: visible;
+      width:min(1120px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow:hidden;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      box-shadow:
+        0 0 0 1px rgba(127,215,255,0.10),
+        0 18px 90px rgba(0,0,0,0.72),
+        0 0 35px rgba(127,215,255,0.10);
+    }
+
+    header{
+      overflow: visible;
+
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:14px;
+      padding:16px 16px 12px;
+      border-bottom:1px solid var(--line);
+      background:
+        linear-gradient(180deg, var(--shadow), rgba(127,215,255,0.00));
+    }
+    h1{
+      margin:0;
+      font-size:15px;
+      letter-spacing:0.14em;
+      font-weight:800;
+      text-transform:uppercase;
+      font-family: var(--mono);
+      color: var(--ink);
+      text-shadow: 0 0 14px rgba(127,215,255,0.18);
+    }
+    .sub{
+      margin-top:6px;
+      font-size:12px;
+      color: var(--muted);
+      line-height:1.35;
+    }
+
+    .pill{
+      font-family: var(--mono);
+      font-size:12px;
+      letter-spacing:0.12em;
+      padding:7px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line2);
+      background: rgba(2, 18, 36, 0.55);
+      color: var(--ink);
+      text-transform: uppercase;
+      box-shadow: 0 0 18px rgba(127,215,255,0.10);
+      white-space:nowrap;
+    }
+    .pill.playing{ border-color: rgba(127,215,255,0.55); box-shadow: 0 0 22px rgba(127,215,255,0.20); }
+    .pill.waiting{ border-color: rgba(255,176,32,0.55); color: rgba(255,224,170,0.95); box-shadow: 0 0 22px rgba(255,176,32,0.10); }
+    .pill.paused{ border-color: rgba(124,255,178,0.55); color: rgba(190,255,220,0.95); box-shadow: 0 0 22px rgba(124,255,178,0.10); }
+
+    .grid{
+      padding-bottom: 220px;
+      padding-bottom: 180px;
+      padding-bottom: 110px;
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap:14px;
+      padding:14px;
+    }
+    @media (max-width: 900px){ .grid{
+      padding-bottom: 220px;
+      padding-bottom: 180px;
+      padding-bottom: 110px; grid-template-columns: 1fr; } }
+
+    .card{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background: var(--panel2);
+      padding:14px;
+      box-shadow: 0 0 0 1px rgba(127,215,255,0.06) inset;
+    }
+
+    .drop{
+      border: 1px dashed rgba(127,215,255,0.30);
+      background: rgba(2, 18, 36, 0.35);
+      border-radius:14px;
+      padding:14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      box-shadow: 0 0 0 1px rgba(127,215,255,0.06) inset;
+    }
+    .drop strong{
+      font-size:13px;
+      font-family: var(--mono);
+      letter-spacing:0.08em;
+      text-transform: uppercase;
+    }
+    .drop .hint{ font-size:12px; color: var(--muted); margin-top:3px; }
+    .drop.dragover{
+      border-color: rgba(127,215,255,0.65);
+      background: rgba(2, 18, 36, 0.55);
+      box-shadow: 0 0 0 3px rgba(127,215,255,0.10) inset, 0 0 24px var(--shadow);
+    }
+
+    input[type="file"]{
+      width:100%;
+      margin-top:10px;
+      padding:10px;
+      border-radius:12px;
+      border:1px solid rgba(127,215,255,0.22);
+      background: rgba(2, 18, 36, 0.30);
+      color: var(--ink);
+    }
+
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    label{
+      font-size:12px;
+      color: var(--muted);
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      font-family: var(--mono);
+      letter-spacing:0.06em;
+      text-transform: uppercase;
+    }
+
+    select, input[type="number"], input[type="text"], button{
+      border-radius:12px;
+      border:1px solid rgba(127,215,255,0.22);
+      background: rgba(2, 18, 36, 0.42);
+      color: rgba(217,243,255,0.95);
+      padding:10px 12px;
+      font-size:14px;
+      outline:none;
+      box-shadow: 0 0 0 1px rgba(127,215,255,0.06) inset;
+    }
+    button{
+      cursor:pointer;
+      font-family: var(--mono);
+      letter-spacing:0.08em;
+      text-transform: uppercase;
+    }
+    button:hover{
+      border-color: rgba(127,215,255,0.42);
+      box-shadow: 0 0 0 1px rgba(127,215,255,0.14) inset, 0 0 18px var(--grid);
+    }
+    button.primary{
+      border-color: rgba(127,215,255,0.55);
+      background: rgba(127,215,255,0.10);
+    }
+    button.danger{
+      border-color: rgba(255,77,125,0.45);
+      background: rgba(255,77,125,0.08);
+    }
+    button:disabled{ opacity:0.45; cursor:not-allowed; }
+
+    .status{
+      margin-top:10px;
+      border:1px solid rgba(127,215,255,0.18);
+      border-radius:12px;
+      background: rgba(2, 18, 36, 0.28);
+      padding:10px 12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+      box-shadow: 0 0 0 1px rgba(127,215,255,0.06) inset;
+    }
+    .now{
+      font-weight:800;
+      font-size:14px;
+      font-family: var(--mono);
+      letter-spacing:0.06em;
+      text-transform: uppercase;
+    }
+    .meta{
+      font-size:12px;
+      color: var(--muted);
+      margin-top:4px;
+      font-family: var(--mono);
+    }
+
+    .meter{
+      position:relative;
+      height:12px;
+      border-radius:999px;
+      border:1px solid rgba(127,215,255,0.20);
+      background: rgba(2, 18, 36, 0.25);
+      overflow:hidden;
+      margin-top:10px;
+      box-shadow: 0 0 0 1px rgba(127,215,255,0.06) inset;
+    }
+    .bar{
+      position:absolute;
+      inset:0 auto 0 0;
+      width:0%;
+      background: linear-gradient(90deg, rgba(127,215,255,0.20), var(--muted));
+      box-shadow: 0 0 18px var(--shadow);
+    }
+    canvas#viz{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+      opacity:0.95;
+      mix-blend-mode: screen;
+    }
+
+    .list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      border:1px solid rgba(127,215,255,0.18);
+      border-radius:12px;
+      overflow:auto;
+      max-height: 480px;
+      background: rgba(2, 18, 36, 0.18);
+      box-shadow: 0 0 0 1px rgba(127,215,255,0.06) inset;
+    }
+    .list li{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:10px;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(127,215,255,0.10);
+      align-items:center;
+    }
+    .list li:last-child{ border-bottom:none; }
+    .title{ font-size:13px; font-family: var(--mono); letter-spacing:0.04em; }
+    .small{ font-size:12px; color: var(--muted); margin-top:3px; font-family: var(--mono); }
+    .rightcol{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+    .mono{ font-family: var(--mono); }
+
+    .tag{
+      font-size:12px;
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid rgba(127,215,255,0.20);
+      background: rgba(2, 18, 36, 0.34);
+      color: var(--ink);
+      white-space:nowrap;
+      font-family: var(--mono);
+      letter-spacing:0.06em;
+      text-transform: uppercase;
+    }
+    .tag.current{ border-color: rgba(127,215,255,0.55); box-shadow: 0 0 16px rgba(127,215,255,0.10); }
+    .tag.remok{ border-color: rgba(124,255,178,0.45); color: rgba(210,255,235,0.95); }
+    .tag.remwarn{ border-color: rgba(255,176,32,0.55); color: rgba(255,224,170,0.95); }
+    .tag.rembad{ border-color: rgba(255,77,125,0.55); color: rgba(255,190,210,0.95); }
+
+    .note{
+      margin-top:10px;
+      font-size:12px;
+      color: var(--muted);
+      line-height:1.45;
+      font-family: var(--mono);
+    }
+    .hr{ height:1px; background: var(--shadow); margin:12px 0; }
+    .footerhint{ font-size:12px; color: rgba(127,215,255,0.82); font-family: var(--mono); letter-spacing:0.06em; text-transform: uppercase; }
+
+    /* Completion overlay styling */
+    #completeOverlay{
+      backdrop-filter: blur(6px);
+    }
+    #completeOverlay > div{
+      border:1px solid rgba(127,215,255,0.24);
+      border-radius:16px;
+      background: rgba(2, 18, 36, 0.72);
+      box-shadow: 0 0 0 1px rgba(127,215,255,0.10) inset, 0 0 40px var(--shadow);
+    }
+  
+
+    /* Scanlines + subtle CRT shimmer */
+    .crt-overlay{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:9998;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          var(--scan) 0px,
+          var(--scan2) 1px,
+          rgba(0,0,0,0.00) 3px,
+          rgba(0,0,0,0.00) 6px
+        );
+      opacity:0.22;
+      mix-blend-mode: overlay;
+    }
+    .crt-overlay::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(1200px 800px at 50% 20%, var(--grid), rgba(0,0,0,0) 65%);
+      opacity:0.55;
+    }
+
+    /* Phosphor flicker */
+    @keyframes phosphorFlicker{
+      0%{ filter: brightness(1) contrast(1); }
+      8%{ filter: brightness(1.03) contrast(1.02); }
+      16%{ filter: brightness(0.98) contrast(1.01); }
+      24%{ filter: brightness(1.04) contrast(1.03); }
+      32%{ filter: brightness(1.00) contrast(1.00); }
+      40%{ filter: brightness(1.02) contrast(1.02); }
+      55%{ filter: brightness(0.99) contrast(1.01); }
+      70%{ filter: brightness(1.03) contrast(1.02); }
+      85%{ filter: brightness(1.00) contrast(1.00); }
+      100%{ filter: brightness(1.02) contrast(1.02); }
+    }
+    .app{
+      position: relative;
+      z-index: 2;
+      animation: phosphorFlicker 6.2s infinite steps(1, end);
+    }
+
+    /* More angular, circuit-panel corners */
+    .app{
+      position: relative;
+      z-index: 2;
+      border-radius: 10px !important;
+      clip-path: polygon(
+        0% 10px, 10px 0%,
+        calc(100% - 10px) 0%, 100% 10px,
+        100% calc(100% - 10px), calc(100% - 10px) 100%,
+        10px 100%, 0% calc(100% - 10px)
+      );
+    }
+    .card, .drop, .list, .status{
+      border-radius: 12px !important;
+      clip-path: polygon(
+        0% 10px, 10px 0%,
+        calc(100% - 10px) 0%, 100% 10px,
+        100% calc(100% - 10px), calc(100% - 10px) 100%,
+        10px 100%, 0% calc(100% - 10px)
+      );
+    }
+    input[type="file"], select, input[type="number"], input[type="text"], button, .pill, .tag{
+      border-radius: 10px !important;
+    }
+
+    /* Optional: gentle scanline drift */
+    @keyframes scanDrift{
+      0%{ transform: translateY(0px); }
+      100%{ transform: translateY(6px); }
+    }
+    .crt-overlay{
+      animation: scanDrift 3.8s linear infinite;
+    }
+
+  
+    /* Matrix rain layer (only visible in matrix theme) */
+    #matrixRain{
+      mix-blend-mode: screen;
+      filter: blur(0.2px);
+    }
+    html[data-theme="matrix"] #matrixRain{
+      opacity: 0.42;
+    }
+    html[data-theme="sequoia"] #matrixRain{ opacity: 0; }
+
+  
+    /* Theme-specific ambient backdrops */
+    html[data-theme="gengar"] body{
+      background:
+        radial-gradient(900px 700px at 15% 10%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, rgba(0,0,0,0) 60%),
+        radial-gradient(800px 650px at 85% 15%, color-mix(in srgb, var(--accent2) 16%, transparent) 0%, rgba(0,0,0,0) 62%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+    }
+    html[data-theme="walkman"] body{
+      background:
+        radial-gradient(1000px 750px at 18% 12%, color-mix(in srgb, var(--accent) 14%, transparent) 0%, rgba(0,0,0,0) 62%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+    }
+    html[data-theme="sequoia"] body{
+      background:
+        radial-gradient(1000px 750px at 20% 0%, rgba(255,255,255,0.16) 0%, rgba(0,0,0,0) 60%),
+        radial-gradient(900px 700px at 80% 10%, color-mix(in srgb, var(--accent) 18%, transparent) 0%, rgba(0,0,0,0) 62%),
+        radial-gradient(900px 700px at 60% 120%, color-mix(in srgb, var(--accent2) 14%, transparent) 0%, rgba(0,0,0,0) 58%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+    }
+
+    /* macOS Sequoia: soften corners, remove clip corners */
+    html[data-theme="sequoia"] .app{
+      border-radius: 18px !important;
+      clip-path: none !important;
+      background: rgba(255,255,255,0.10) !important;
+      box-shadow:
+        0 12px 60px rgba(0,0,0,0.55),
+        0 0 0 1px rgba(255,255,255,0.10) inset;
+    }
+    html[data-theme="sequoia"] .card,
+    html[data-theme="sequoia"] .drop,
+    html[data-theme="sequoia"] .list,
+    html[data-theme="sequoia"] .status{
+      border-radius: 16px !important;
+      clip-path: none !important;
+      background: rgba(255,255,255,0.07) !important;
+    }
+    html[data-theme="sequoia"] .crt-overlay{ opacity: 0.0 !important; }
+
+    /* Walkman: slightly chunkier UI */
+    html[data-theme="walkman"] button,
+    html[data-theme="walkman"] select,
+    html[data-theme="walkman"] input[type="number"],
+    html[data-theme="walkman"] input[type="text"]{
+      background: rgba(0, 30, 22, 0.55) !important;
+    }
+    html[data-theme="walkman"] .crt-overlay{ opacity: 0.16; }
+
+    /* Gengar: a bit moodier */
+    html[data-theme="gengar"] .crt-overlay{ opacity: 0.20; }
+
+  
+    header select{
+      position: relative;
+      z-index: 5;
+    }
+    #themeControls{
+      z-index: 5;
+    }
+
+  
+    /* Theme picker menu */
+    #themeMenu button{
+      width:100%;
+      justify-content:center;
+    }
+    #themeMenu .themeOption{
+      background: rgba(255,255,255,0.05);
+    }
+    #themeMenu .themeOption.selected{
+      border-color: var(--line2);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.10) inset, 0 0 18px rgba(255,255,255,0.06);
+    }
+
+  
+    /* Theme modal buttons */
+    #themeModal .themeOption{
+      width:100%;
+      text-align:center;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+    }
+    #themeModal .themeOption:hover{ border-color: var(--line2); }
+    #themeModal .themeOption.selected{
+      border-color: var(--line2);
+      background: color-mix(in srgb, var(--accent) 14%, rgba(255,255,255,0.03));
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.10) inset, 0 0 24px rgba(255,255,255,0.06);
+    }
+  
+    /* Theme-wide text + UI color harmonization */
+    body{ color: var(--ink) !important; }
+    header h1, h1{ color: var(--ink) !important; }
+    .sub, .meta, .note, .footerhint, label, .small{ color: var(--muted) !important; }
+    .title, .now{ color: var(--ink) !important; }
+    .pill, .tag{ color: var(--ink) !important; }
+    button, select, input[type="number"], input[type="text"]{ color: var(--ink) !important; }
+    input[type="file"]{ color: var(--muted) !important; }
+
+    /* Make modal + boot panels inherit theme */
+    #themeModal > div{ background: color-mix(in srgb, var(--panel2) 85%, rgba(0,0,0,0.35)) !important; border-color: var(--line2) !important; }
+    #themeModal .note b{ color: var(--ink) !important; }
+    #bootPanel{ background: color-mix(in srgb, var(--panel2) 78%, rgba(0,0,0,0.35)) !important; border-color: var(--line2) !important; }
+    #bootText{ color: var(--muted) !important; }
+
+    /* Matrix rain visibility */
+    #matrixRain{ mix-blend-mode: screen; filter: blur(0.2px); }
+    html[data-theme="matrix"] #matrixRain{ opacity: 0.42; }
+    html:not([data-theme="matrix"]) #matrixRain{ opacity: 0; }
+
+  
+    /* Layout breathing room */
+    #themeBar{ margin-bottom: 22px !important; }
+    .card{ padding:16px; }
+    .list{ max-height: 560px; }
+
+  
+    /* Fixed footer theme bar */
+    #themeBar{
+      box-shadow: 0 -12px 40px rgba(0,0,0,0.55);
+    }
+
+  
+    /* TRUE fixed footer: keep outside any filtered/transformed ancestors */
+    body{ padding-bottom: 230px; } /* ensures content never hides behind footer */
+
+    #themeBar{
+      position: fixed !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      z-index: 99999 !important;
+      pointer-events: auto;
+      background: color-mix(in srgb, var(--panel2) 88%, rgba(0,0,0,0.35));
+      border-top: 1px solid var(--line);
+      box-shadow: 0 -14px 48px rgba(0,0,0,0.65);
+      /* prevent mobile browser UI causing jumps */
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    #themeBarInner{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    @media (max-width: 700px){
+      #themeBarInner{ flex-direction:column; align-items:flex-start; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="bootOverlay" style="position:fixed; inset:0; display:grid; place-items:center; background:rgba(0,0,0,0.92); z-index:10000;">
+    <div id="bootPanel" style="width:min(760px, 92%); border:1px solid rgba(127,215,255,0.28); border-radius:12px; background:rgba(2,18,36,0.55); box-shadow: 0 0 0 1px rgba(127,215,255,0.10) inset, 0 0 55px rgba(127,215,255,0.12); padding:18px;">
+      <div style="font-family:var(--mono); letter-spacing:0.22em; text-transform:uppercase; font-weight:800; font-size:14px; color:rgba(217,243,255,0.9);">
+        ENCOM OS
+      </div>
+      <div style="margin-top:10px; font-family:var(--mono); letter-spacing:0.10em; text-transform:uppercase; font-size:12px; color:var(--muted); line-height:1.55;">
+        Initializing audio buses<br/>
+        Mounting disc-time registry<br/>
+        Calibrating spectrum analyser<br/>
+        Loading interface modules
+      </div>
+      <div style="margin-top:14px; height:12px; border-radius:999px; border:1px solid rgba(127,215,255,0.24); background:rgba(2,18,36,0.35); overflow:hidden;">
+        <div id="bootBar" style="height:100%; width:0%; background:linear-gradient(90deg, rgba(127,215,255,0.25), rgba(127,215,255,0.90)); box-shadow:0 0 18px rgba(127,215,255,0.12);"></div>
+      </div>
+      <div id="bootText" style="margin-top:10px; font-family:var(--mono); letter-spacing:0.16em; text-transform:uppercase; font-size:11px; color:var(--muted);">
+        Boot sequence: 0%
+      </div>
+    </div>
+  </div>
+
+  <div class="app">
+    <header>
+      <div>
+        <h1>ENCOM MINI-DISC INTERFACE</h1>
+        <div class="sub">
+          Drag and drop your tracks, play in order, enforce a <b>7s gap</b>, remove tracks after playback, and track remaining disc time across sessions.
+        </div>
+      </div>
+      <div class="row" style="gap:10px; align-items:center; justify-content:flex-end;">
+  <label style="margin:0;">
+    Theme
+    <select id="themeSelect" style="min-width:180px;">
+      <option value="encom">ENCOM (Cyan)</option>
+      <option value="ares">Dillinger Systems (Red)</option>
+      <option value="matrix">Matrix (Green)</option>
+    
+      <option value="gengar">Pokémon Gengar (Purple)</option>
+      <option value="walkman">Sony Walkman MZ-R700 (Green)</option>
+      <option value="sequoia">macOS Sequoia</option>
+    </select>
+  </label>
+  <button id="themeBtn" class="primary" title="Apply theme">APPLY</button>
+  
+<div class="pill" id="modePill">IDLE</div>
+</div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <div id="dropZone" class="drop">
+          <div>
+            <strong>Drop audio files here</strong>
+            <div class="hint">Or use the file picker below. Click a track to play it.</div>
+          </div>
+          <div class="pill mono" id="trackCount">0 tracks</div>
+        </div>
+
+        <input id="fileInput" type="file" accept="audio/*" multiple />
+
+        <div class="status">
+          <div style="min-width:260px;">
+            <div class="now" id="nowPlaying">No track loaded</div>
+            <div class="meta" id="metaLine">Drop files to begin.</div>
+          </div>
+
+          <div class="row">
+            <label>Gap (sec)
+              <input id="gapInput" type="number" min="0" max="120" step="1" value="7" />
+            </label>
+
+            <label>Disc
+              <select id="discLen">
+                <option value="74">74 min</option>
+                <option value="80" selected>80 min</option>
+              </select>
+            </label>
+
+            <label>Mode
+              <select id="mdMode">
+                <option value="SP" selected>SP (1×)</option>
+                <option value="LP2">LP2 (2×)</option>
+                <option value="LP4">LP4 (4×)</option>
+              </select>
+            </label>
+
+            <label title="If you're recording continuously, the pause is silence that still uses disc time.">
+              <input id="includeGap" type="checkbox" checked />
+              Include gap in disc time
+            </label>
+
+            <label title="Tracks are removed from the playlist when they finish playing.">
+              <input id="autoRemove" type="checkbox" checked />
+              Auto-remove played tracks
+            </label>
+
+            <label><input id="loopToggle" type="checkbox" /> Loop</label>
+            <label><input id="shuffleToggle" type="checkbox" /> Shuffle</label>
+          </div>
+        <div class="hr"></div>
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <div style="font-weight:800; font-family:var(--mono); letter-spacing:0.12em; text-transform:uppercase;">Manual Disc Remaining</div>
+          <div class="pill mono" id="manualBadge">AUTO</div>
+        </div>
+        <div class="note" style="margin-top:8px;">
+          If you already recorded on this disc outside the app, type the remaining time shown on your MiniDisc player (mm:ss), then enable Manual.
+        </div>
+        <div class="row" style="margin-top:10px; align-items:flex-end;">
+          <label>Time left (mm:ss)
+            <input id="manualRemain" type="text" placeholder="e.g. 12:34" style="min-width:170px;" />
+          </label>
+          <label>Manual
+            <input id="useManualRemain" type="checkbox" />
+          </label>
+          <button id="applyManualBtn" type="button">Apply</button>
+          <button id="clearManualBtn" type="button">Clear</button>
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <div class="footerhint">Checks use: <span class="mono" id="manualExplain">Saved/Pending</span></div>
+        </div>
+
+        </div>
+
+        <div class="meter">
+          <div class="bar" id="progressBar"></div>
+          <canvas id="viz"></canvas>
+        </div>
+
+        <div class="meter" style="margin-top:10px;">
+          <div class="bar" id="discBar" style="background: linear-gradient(90deg, rgba(251,113,133,0.25), rgba(214,211,209,0.65));"></div>
+        </div>
+        <div class="row" style="margin-top:8px; justify-content:space-between;">
+          <div class="footerhint">Disc usage: <span class="mono" id="discUsageLine">--%</span></div>
+          <div class="footerhint">Used / Capacity: <span class="mono" id="usedCapLine">--:-- / --:--</span></div>
+        </div>
+
+        <div class="row" style="margin-top:10px; gap:14px; align-items:center;">
+          <canvas id="pie" width="140" height="140" style="width:140px;height:140px;border:1px solid rgba(255,255,255,0.08);border-radius:999px;background:rgba(255,255,255,0.02);"></canvas>
+          <div style="display:grid; gap:6px;">
+            <div class="footerhint">Estimated disc usage (saved remaining)</div>
+            <div class="footerhint">Used: <span class="mono" id="pieUsed">--:--</span></div>
+            <div class="footerhint">Remaining: <span class="mono" id="pieRem">--:--</span></div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <button class="primary" id="playBtn" disabled>Play</button>
+          <button id="pauseBtn" disabled>Pause</button>
+          <button id="prevBtn" disabled>Prev</button>
+          <button id="nextBtn" disabled>Next</button>
+          <button class="danger" id="stopBtn" disabled>Stop</button>
+          <button class="danger" id="clearBtn" disabled>Clear</button>
+          <button id="resetDiscBtn" disabled>Reset disc/session</button>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="row" style="justify-content:space-between;">
+          <div class="footerhint">
+            MiniDisc capacity: <span class="mono" id="capLine">80:00 capacity (SP)</span>
+          </div>
+          <div class="footerhint">
+            Saved remaining (this disc/mode): <span class="mono" id="savedRemainLine">--:--</span>
+          </div>
+          <div class="footerhint">
+            Remaining after playlist: <span class="mono" id="remainLine">--:--</span>
+          </div>
+          <div class="footerhint">
+            Tracks remaining: <span class="mono" id="tracksRemainingLine">0</span>
+          </div>
+        </div>
+
+        <div class="note">
+          Tip: The app stores your <b>remaining disc time</b> in your browser for each disc length + mode combo. Hit <b>Reset disc/session</b> when you put in a fresh disc.
+        </div>
+
+        <audio id="player" preload="metadata"></audio>
+      </section>
+
+      <section class="card">
+        <div class="row" style="justify-content:space-between;">
+          <div style="font-weight:700;">Playlist (play order)</div>
+          <div class="pill mono" id="discPill">DISC OK</div>
+        </div>
+        <div class="note" style="margin-top:6px;">
+          Each row shows track duration and the <b>remaining disc time after recording it</b> (based on your saved remaining).
+        </div>
+        <div style="height:10px;"></div>
+        <ul class="list" id="playlist"></ul>
+        <div class="hr"></div>
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <div style="font-weight:700;">MiniDisc Label Maker</div>
+          <div class="pill mono" id="labelHint">EXPORT PNG</div>
+        </div>
+        <div class="note" style="margin-top:6px;">
+          Upload an image for the label background, add text, then export a PNG you can print. (Print settings vary by printer.)
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <label>Template
+            <select id="labelTemplate">
+              <option value="front" selected>Front (68×72 mm)</option>
+              <option value="spine">Spine (68×12 mm)</option>
+              <option value="custom">Custom (mm)</option>
+            </select>
+          </label>
+
+          <label>W (mm)
+            <input id="labelW" type="number" min="10" max="200" step="1" value="68" />
+          </label>
+
+          <label>H (mm)
+            <input id="labelH" type="number" min="10" max="200" step="1" value="72" />
+          </label>
+
+          <label>DPI
+            <input id="labelDpi" type="number" min="72" max="600" step="1" value="300" />
+          </label>
+        </div>
+
+        <input id="labelBgInput" type="file" accept="image/*" />
+
+        <div class="row" style="margin-top:10px;">
+          <label>Title
+            <input id="labelTitle" type="text" value="MiniDisc Mix" style="min-width:220px;" />
+          </label>
+          <label>Subtitle
+            <input id="labelSubtitle" type="text" value="" style="min-width:220px;" />
+          </label>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <label>Title size
+            <input id="labelTitleSize" type="number" min="8" max="72" step="1" value="22" />
+          </label>
+          <label>Subtitle size
+            <input id="labelSubSize" type="number" min="6" max="48" step="1" value="14" />
+          </label>
+          <label>Invert text
+            <input id="labelInvert" type="checkbox" />
+          </label>
+          <button id="renderLabelBtn">Render label</button>
+          <button class="primary" id="downloadLabelBtn">Download label PNG</button>
+        </div>
+
+        <canvas id="labelCanvas" style="width:100%;max-width:520px;border:1px solid rgba(255,255,255,0.08);border-radius:14px;background:rgba(255,255,255,0.02);"></canvas>
+
+      </section>
+    </div>
+  </div>
+<div id="themeBar" class="card" style="
+      position: sticky;
+      bottom: 0;
+      margin: 14px;
+      margin-top: 0;
+      z-index: 50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    ">
+      <div class="row" style="gap:10px; align-items:center; flex-wrap:wrap;">
+        <div class="pill mono" id="themeStatus">THEME: ENCOM</div>
+        <button id="themePickerBtn" class="primary" type="button">Choose Theme</button>
+        <button id="themeApplyBtn" type="button">Apply</button>
+        <button id="themeCancelPendingBtn" type="button" title="Clear pending unsaved session usage">Clear pending session</button>
+      </div>
+      <div class="footerhint" id="sessionHint">
+        Effective remaining: <span class="mono" id="effectiveRemainLine">--:--</span>
+        <span style="opacity:0.7;">(saved <span class="mono" id="savedRemainLine2">--:--</span>, pending <span class="mono" id="pendingUsedLine">--:--</span>)</span>
+      </div>
+    </div>
+
+    <div id="themeModal" style="position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,0.62); z-index:12000;">
+      <div style="width:min(520px, 92%); border:1px solid var(--line2); background: rgba(2, 18, 36, 0.86); border-radius: 14px; padding: 14px; box-shadow: 0 0 0 1px rgba(255,255,255,0.06) inset, 0 24px 80px rgba(0,0,0,0.7);">
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <div style="font-weight:800; font-family:var(--mono); letter-spacing:0.14em; text-transform:uppercase;">Theme Selector</div>
+          <button id="themeModalClose" type="button">Close</button>
+        </div>
+        <div class="note" style="margin-top:8px;">Pick a theme, then hit <b>Apply</b> in the bottom bar.</div>
+        <div class="hr"></div>
+        <div id="themeList" style="display:grid; gap:10px;">
+          <button class="themeOption" data-theme="encom" type="button">ENCOM (Cyan)</button>
+          <button class="themeOption" data-theme="ares" type="button">Dillinger Systems (Red)</button>
+          <button class="themeOption" data-theme="matrix" type="button">Matrix (Green)</button>
+          <button class="themeOption" data-theme="gengar" type="button">Pokémon Gengar (Purple)</button>
+          <button class="themeOption" data-theme="walkman" type="button">Sony Walkman MZ-R700 (Green)</button>
+          <button class="themeOption" data-theme="sequoia" type="button">macOS Sequoia</button>
+        </div>
+      </div>
+    </div>
+
+  <div id="completeOverlay" style="position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,0.55); z-index:9999;">
+    <div style="text-align:center; padding:20px;">
+      <div style="font-family:var(--mono); letter-spacing:0.12em; font-size:14px; color:rgba(255,255,255,0.7);">STATUS</div>
+      <div style="margin-top:10px; font-size:44px; font-weight:800; color:var(--ink);">Completed!</div>
+      <div style="margin-top:10px; font-size:13px; color:var(--muted);">All tracks played. Your saved remaining time has been updated.</div>
+      <button id="closeCompleteBtn" class="primary" style="margin-top:16px;">Close</button>
+    </div>
+    <canvas id="confetti" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;"></canvas>
+  </div>
+
+<script>
+(() => {
+
+  // --- ENCOM boot splash + beep ---
+  const bootOverlay = document.getElementById('bootOverlay');
+  const bootBar = document.getElementById('bootBar');
+  const bootText = document.getElementById('bootText');
+
+  function playBootBeep(){
+    try{
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.value = 880;
+      g.gain.value = 0.0001;
+      o.connect(g);
+      g.connect(ctx.destination);
+      o.start();
+      const now = ctx.currentTime;
+      // quick chirp: attack then decay
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.exponentialRampToValueAtTime(0.06, now + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+      o.frequency.setValueAtTime(880, now);
+      o.frequency.exponentialRampToValueAtTime(1240, now + 0.08);
+      o.stop(now + 0.20);
+      o.onended = () => { try{ ctx.close(); }catch(_){} };
+    }catch(_){}
+  }
+
+  function runBoot(){
+    if (!bootOverlay) return;
+    let p = 0;
+    playBootBeep();
+    const t0 = performance.now();
+    const duration = 1750; // ms
+    const tick = () => {
+      const t = performance.now() - t0;
+      p = Math.min(100, (t / duration) * 100);
+      if (bootBar) bootBar.style.width = p.toFixed(0) + '%';
+      if (bootText) bootText.textContent = 'Boot sequence: ' + p.toFixed(0) + '%';
+      if (p < 100) requestAnimationFrame(tick);
+      else {
+        bootOverlay.style.opacity = '0';
+        bootOverlay.style.transition = 'opacity 260ms ease';
+        setTimeout(() => { bootOverlay.style.display = 'none'; }, 280);
+      }
+    };
+    requestAnimationFrame(tick);
+  }
+
+  runBoot();
+
+
+  // --- Theme switching (ENCOM / ARES / MATRIX) ---
+  const themeBtn = document.getElementById('themeBtn');
+  const themeSelect = document.getElementById('themeSelect'); // may be null
+  const THEMES = [
+    { id: "encom", label: "ENCOM" },
+    { id: "ares", label: "DILLINGER" },
+    { id: "matrix", label: "MATRIX" },
+    { id: "gengar", label: "GENGAR" },
+    { id: "walkman", label: "WALKMAN" },
+    { id: "sequoia", label: "SEQUOIA" },
+  ];
+
+  function applyTheme(id){
+    const root = document.documentElement;
+    root.setAttribute("data-theme", id);
+    try{ localStorage.setItem("encom_theme", id); }catch(_){}
+    if (themeSelect) themeSelect.value = id;
+  }
+
+  function loadTheme(){
+    let saved = "encom";
+    try{ saved = localStorage.getItem("encom_theme") || "encom"; }catch(_){}
+    if (!THEMES.some(t => t.id === saved)) saved = "encom";
+    applyTheme(saved);
+  }
+
+  function applySelectedTheme(){
+    const id = (themeSelect && themeSelect.value) ? themeSelect.value : "encom";
+    applyTheme(id);
+  }
+
+  loadTheme();
+
+  // --- Theme UI (modal selector + bottom apply) ---
+  const themeStatus = document.getElementById('themeStatus');
+  const themeModal = document.getElementById('themeModal');
+  const themeModalClose = document.getElementById('themeModalClose');
+  const themePickerBtn = document.getElementById('themePickerBtn');
+  const themeApplyBtn = document.getElementById('themeApplyBtn');
+  const themeCancelPendingBtn = document.getElementById('themeCancelPendingBtn');
+  const themeButtons = Array.from(document.querySelectorAll('#themeModal .themeOption'));
+
+  let pendingTheme = document.documentElement.getAttribute("data-theme") || "encom";
+
+  function labelForTheme2(id){
+    const map = {
+      encom: "ENCOM",
+      ares: "DILLINGER",
+      matrix: "MATRIX",
+      gengar: "GENGAR",
+      walkman: "WALKMAN",
+      sequoia: "SEQUOIA"
+    };
+    return map[id] || (id ? id.toUpperCase() : "ENCOM");
+  }
+
+  function setPendingTheme(id){
+    pendingTheme = id;
+    themeButtons.forEach(b => b.classList.toggle('selected', b.dataset.theme === id));
+    if (themeStatus){
+      const cur = document.documentElement.getAttribute("data-theme") || "encom";
+      themeStatus.textContent = "THEME: " + labelForTheme2(id) + (id !== cur ? " (PENDING)" : "");
+    }
+  }
+
+  function openThemeModal(){
+    if (!themeModal) return;
+    themeModal.style.display = "grid";
+    setPendingTheme(pendingTheme);
+  }
+  function closeThemeModal(){
+    if (!themeModal) return;
+    themeModal.style.display = "none";
+  }
+
+  if (themePickerBtn) themePickerBtn.addEventListener('click', openThemeModal);
+  if (themeModalClose) themeModalClose.addEventListener('click', closeThemeModal);
+  if (themeModal) themeModal.addEventListener('click', (e) => { if (e.target === themeModal) closeThemeModal(); });
+
+  themeButtons.forEach(btn => btn.addEventListener('click', () => setPendingTheme(btn.dataset.theme || "encom")));
+
+  if (themeApplyBtn) themeApplyBtn.addEventListener('click', () => {
+    applyTheme(pendingTheme);
+    if (themeStatus) themeStatus.textContent = "THEME: " + labelForTheme2(pendingTheme);
+    closeThemeModal();
+    updateEffectiveRemainingUI();
+    renderPlaylist();
+  });
+
+  // Sync initial status
+  setPendingTheme(document.documentElement.getAttribute("data-theme") || "encom");
+
+  // --- Pending (unsaved) session usage tracking ---
+  const effectiveRemainLine = document.getElementById('effectiveRemainLine');
+  const savedRemainLine2 = document.getElementById('savedRemainLine2');
+  const pendingUsedLine = document.getElementById('pendingUsedLine');
+  const manualRemain = document.getElementById('manualRemain');
+  const useManualRemain = document.getElementById('useManualRemain');
+  const applyManualBtn = document.getElementById('applyManualBtn');
+  const clearManualBtn = document.getElementById('clearManualBtn');
+
+
+  let pendingUsedSec = 0;
+
+  function pendingKey(){
+    return `noir_md_pending_used_${discLenSel.value}_${normMode()}`;
+  }
+
+  function loadPending(){
+    const raw = localStorage.getItem(pendingKey());
+    const val = raw === null ? 0 : parseFloat(raw);
+    pendingUsedSec = (typeof val === "number" && isFinite(val) && val >= 0) ? val : 0;
+  }
+
+  function savePending(){
+    pendingUsedSec = Math.max(0, pendingUsedSec);
+    localStorage.setItem(pendingKey(), String(pendingUsedSec));
+  }
+
+  function clearPending(){
+    pendingUsedSec = 0;
+    savePending();
+    updateEffectiveRemainingUI();
+    renderPlaylist();
+    updateNowPlaying();
+    updatePieChart();
+  }
+
+  themeCancelPendingBtns.forEach(b => b.addEventListener('click', clearPending));
+
+  if (applyManualBtn) applyManualBtn.addEventListener('click', applyManualFromInput);
+  if (clearManualBtn) clearManualBtn.addEventListener('click', clearManual);
+  if (useManualRemain) useManualRemain.addEventListener('change', () => {
+    // If user typed a time, turning Manual on should immediately use it (no extra Apply required)
+    if (useManualRemain.checked){
+      if (manualRemainingSec === null) syncManualFromField({save:false, clearOnInvalid:false});
+    }
+    saveManual();
+    refreshDiscAndUI(false);
+    updatePieChart();
+  });
+  if (manualRemain) manualRemain.addEventListener('keydown', (e) => { if (e.key === 'Enter') applyManualFromInput(); });
+  if (manualRemain) manualRemain.addEventListener('input', () => {
+    // Live update: as soon as a valid time is typed, treat it as Manual Remaining
+    // and immediately refresh the pie + usage bars.
+    const sec = parseTimeInput(manualRemain.value);
+    if (sec === null) {
+      // If the field is cleared, don't force anything.
+      // (User can hit Clear or toggle Manual off.)
+      refreshDiscAndUI(true);
+      return;
+    }
+    const cap = discCapacitySeconds();
+    manualRemainingSec = Math.max(0, Math.min(cap, sec));
+    if (useManualRemain) useManualRemain.checked = true;
+    // Don't spam storage on every keystroke unless the value is parseable
+    saveManual();
+    refreshDiscAndUI(true);
+  });
+
+  function effectiveRemaining(){
+    return remainingForVisuals();
+  }
+
+  function updateEffectiveRemainingUI(){
+    if (savedRemainLine2) savedRemainLine2.textContent = fmt(baseRemainingForEstimates());
+    if (pendingUsedLine) pendingUsedLine.textContent = fmt(pendingUsedSec);
+    const base = getBaseRemainingForChecks();
+    const manualOn = (useManualRemain && useManualRemain.checked && manualRemainingSec !== null);
+    if (effectiveRemainLine) effectiveRemainLine.textContent = fmt(base) + (manualOn ? " (manual)" : "");
+    if (manualBadge) manualBadge.textContent = manualOn ? "MANUAL" : "AUTO";
+    if (manualExplain) manualExplain.textContent = manualOn ? "Manual time left" : "Saved/Pending";
+    updatePieChart();
+  }
+
+  // --- Manual remaining override (for external recordings) ---
+  let manualRemainingSec = null;
+
+  function manualKey(){
+    return `noir_md_manual_remaining_${discLenSel.value}_${normMode()}`;
+  }
+  function manualEnabledKey(){
+    return `noir_md_manual_enabled_${discLenSel.value}_${normMode()}`;
+  }
+
+  function parseTimeInput(str){
+    if (!str) return null;
+    const s = String(str).trim();
+    // accept mm:ss or hh:mm:ss or seconds
+    if (/^\d+:\d{2}(:\d{2})?$/.test(s)){
+      const parts = s.split(":").map(x => parseInt(x,10));
+      if (parts.some(x => !isFinite(x))) return null;
+      if (parts.length === 2){
+        const [mm, ss] = parts;
+        if (ss >= 60) return null;
+        return mm*60 + ss;
+      } else {
+        const [hh, mm, ss] = parts;
+        if (mm >= 60 || ss >= 60) return null;
+        return hh*3600 + mm*60 + ss;
+      }
+    }
+    if (/^\d+(\.\d+)?$/.test(s)){
+      const sec = Math.floor(parseFloat(s));
+      return sec >= 0 ? sec : null;
+    }
+    return null;
+  }
+
+  // Keep manualRemainingSec in sync with the input field (so the pie/bar update as soon as you type)
+  function syncManualFromField(opts){
+    opts = opts || {};
+    const sec = parseTimeInput(manualRemain ? manualRemain.value : "");
+    if (sec === null){
+      if (opts.clearOnInvalid){
+        manualRemainingSec = null;
+      }
+      return null;
+    }
+    manualRemainingSec = Math.max(0, Math.min(discCapacitySeconds(), sec));
+    if (opts.save) saveManual();
+    return manualRemainingSec;
+  }
+
+  function refreshDiscAndUI(light){
+    // light=true skips expensive playlist rebuilds
+    updateDiscOverallBar();
+    updateEffectiveRemainingUI();
+    if (!light){
+      renderPlaylist();
+      updateNowPlaying();
+    }
+  }
+
+  function loadManual(){
+    try{
+      const raw = localStorage.getItem(manualKey());
+      manualRemainingSec = raw === null ? null : parseFloat(raw);
+      if (!(typeof manualRemainingSec === "number" && isFinite(manualRemainingSec) && manualRemainingSec >= 0)) manualRemainingSec = null;
+      const enabled = localStorage.getItem(manualEnabledKey());
+      const en = enabled === "1";
+      if (useManualRemain) useManualRemain.checked = en;
+      if (manualRemain) manualRemain.value = (manualRemainingSec === null ? "" : fmt(manualRemainingSec));
+    }catch(_){
+      manualRemainingSec = null;
+    }
+  }
+
+  function saveManual(){
+    try{
+      if (manualRemainingSec === null) localStorage.removeItem(manualKey());
+      else localStorage.setItem(manualKey(), String(manualRemainingSec));
+      if (useManualRemain) localStorage.setItem(manualEnabledKey(), useManualRemain.checked ? "1" : "0");
+    }catch(_){}
+  }
+
+  function getBaseRemainingForChecks(){
+    // Priority: manual (if enabled) -> effective remaining (saved - pending)
+    if (useManualRemain && useManualRemain.checked && manualRemainingSec !== null) return manualRemainingSec;
+    return effectiveRemaining();
+  }
+
+  function applyManualFromInput(){
+    const sec = parseTimeInput(manualRemain ? manualRemain.value : "");
+    if (sec === null){
+      if (manualRemain) manualRemain.value = "";
+      manualRemainingSec = null;
+      saveManual();
+    updateDiscOverallBar();
+    updateEffectiveRemainingUI();
+    renderPlaylist();
+    updateNowPlaying();
+    updatePieChart();
+      return;
+    }
+    manualRemainingSec = Math.max(0, Math.min(discCapacitySeconds(), sec));
+    if (manualRemain) manualRemain.value = fmt(manualRemainingSec);
+    if (useManualRemain) useManualRemain.checked = true;
+    saveManual();
+    updateDiscOverallBar();
+    updateEffectiveRemainingUI();
+    renderPlaylist();
+    updateNowPlaying();
+    updatePieChart();
+  }
+
+  function clearManual(){
+    manualRemainingSec = null;
+    if (manualRemain) manualRemain.value = "";
+    if (useManualRemain) useManualRemain.checked = false;
+    saveManual();
+    updateDiscOverallBar();
+    updateEffectiveRemainingUI();
+    renderPlaylist();
+    updateNowPlaying();
+    updatePieChart();
+  }
+
+  const fileInput = document.getElementById('fileInput');
+  const dropZone = document.getElementById('dropZone');
+  const player = document.getElementById('player');
+
+  const playBtn = document.getElementById('playBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const resetDiscBtn = document.getElementById('resetDiscBtn');
+
+  const loopToggle = document.getElementById('loopToggle');
+  const shuffleToggle = document.getElementById('shuffleToggle');
+
+  const gapInput = document.getElementById('gapInput');
+  const discLenSel = document.getElementById('discLen');
+  const mdModeSel = document.getElementById('mdMode');
+
+  function normMode(){
+    const raw = (mdModeSel && mdModeSel.value) ? String(mdModeSel.value) : 'SP';
+    // normalize things like SP1, SP, LP-2, LP2, LP4, LP-4
+    const cleaned = raw.toUpperCase().replace(/[^A-Z0-9]/g,'');
+    if (cleaned === 'SP1' || cleaned === 'SP') return 'SP';
+    if (cleaned === 'LP2' || cleaned === 'LP02') return 'LP2';
+    if (cleaned === 'LP4' || cleaned === 'LP04') return 'LP4';
+    return cleaned || 'SP';
+  }
+
+  const includeGapChk = document.getElementById('includeGap');
+  const autoRemoveChk = document.getElementById('autoRemove');
+
+  const nowPlaying = document.getElementById('nowPlaying');
+  const metaLine = document.getElementById('metaLine');
+  const progressBar = document.getElementById('progressBar');
+  const playlistEl = document.getElementById('playlist');
+  const modePill = document.getElementById('modePill');
+
+  const trackCount = document.getElementById('trackCount');
+  const capLine = document.getElementById('capLine');
+  const savedRemainLine = document.getElementById('savedRemainLine');
+  const remainLine = document.getElementById('remainLine');
+  const discPill = document.getElementById('discPill');
+
+  const discBar = document.getElementById('discBar');
+  const discUsageLine = document.getElementById('discUsageLine');
+  const usedCapLine = document.getElementById('usedCapLine');
+  const tracksRemainingLine = document.getElementById('tracksRemainingLine');
+  const pie = document.getElementById('pie');
+  const pieUsed = document.getElementById('pieUsed');
+  const pieRem = document.getElementById('pieRem');
+  const pieCtx = pie ? pie.getContext('2d') : null;
+
+  // Label maker
+  const labelTemplate = document.getElementById('labelTemplate');
+  const labelW = document.getElementById('labelW');
+  const labelH = document.getElementById('labelH');
+  const labelDpi = document.getElementById('labelDpi');
+  const labelBgInput = document.getElementById('labelBgInput');
+  const labelTitle = document.getElementById('labelTitle');
+  const labelSubtitle = document.getElementById('labelSubtitle');
+  const labelTitleSize = document.getElementById('labelTitleSize');
+  const labelSubSize = document.getElementById('labelSubSize');
+  const labelInvert = document.getElementById('labelInvert');
+  const renderLabelBtn = document.getElementById('renderLabelBtn');
+  const downloadLabelBtn = document.getElementById('downloadLabelBtn');
+  const labelCanvas = document.getElementById('labelCanvas');
+  const labelCtx = labelCanvas ? labelCanvas.getContext('2d') : null;
+  const labelHint = document.getElementById('labelHint');
+
+  // Completion overlay + confetti
+  const completeOverlay = document.getElementById('completeOverlay');
+  const closeCompleteBtn = document.getElementById('closeCompleteBtn');
+  const confettiCanvas = document.getElementById('confetti');
+  const confettiCtx = confettiCanvas ? confettiCanvas.getContext('2d') : null;
+
+
+  const vizCanvas = document.getElementById('viz');
+  const vizCtx = vizCanvas.getContext('2d');
+
+  /** @type {{name:string, url:string, file:File, durationSec:number|null}[]} */
+  let tracks = [];
+  let order = [];
+  let currentPos = -1;
+  let waitingTimer = null;
+  let waitingUntil = 0;
+  let mode = "IDLE";
+
+  // pending session tracking
+  let lastPlayTick = 0;
+
+  // per-disc saved remaining
+  let savedRemainingSec = null;
+
+  // WebAudio
+  let audioCtx = null;
+  let analyser = null;
+  let srcNode = null;
+  let vizRAF = null;
+  let freqBuf = null;
+
+  function setMode(m){
+    mode = m;
+    modePill.textContent = m;
+    modePill.className = "pill " + (m==="PLAYING" ? "playing" : m==="WAITING" ? "waiting" : m==="PAUSED" ? "paused" : "");
+  }
+
+  function fmt(sec){
+    if (!isFinite(sec)) return "--:--";
+    sec = Math.max(0, Math.round(sec));
+    const m = Math.floor(sec/60);
+    const s = sec%60;
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+
+  function clearWait(){
+    if (waitingTimer){
+      clearTimeout(waitingTimer);
+      waitingTimer = null;
+      waitingUntil = 0;
+    }
+  }
+
+  function getGapSec(){
+    const v = parseInt(gapInput.value, 10);
+    return Number.isFinite(v) ? Math.min(120, Math.max(0, v)) : 7;
+  }
+
+  function modeMultiplier(){
+    const m = normMode();
+    return m === "LP2" ? 2 : m === "LP4" ? 4 : 1;
+  }
+
+  function discCapacitySeconds(){
+    const baseMin = parseInt(discLenSel.value, 10) || 80;
+    return baseMin * 60 * modeMultiplier();
+  }
+
+  function storageKey(){
+    return `noir_md_remaining_${discLenSel.value}_${normMode()}`;
+  }
+
+  function loadSavedRemaining(){
+    const cap = discCapacitySeconds();
+    const raw = localStorage.getItem(storageKey());
+    const val = raw === null ? null : parseFloat(raw);
+    if (typeof val === "number" && isFinite(val) && val >= 0) savedRemainingSec = Math.min(val, cap);
+    else savedRemainingSec = cap;
+    savedRemainLine.textContent = fmt(savedRemainingSec);
+    updateDiscOverallBar();
+    updateEffectiveRemainingUI();
+  }
+
+  function saveRemaining(){
+    const cap = discCapacitySeconds();
+    if (savedRemainingSec === null) savedRemainingSec = cap;
+    savedRemainingSec = Math.max(0, Math.min(savedRemainingSec, cap));
+    localStorage.setItem(storageKey(), String(savedRemainingSec));
+    savedRemainLine.textContent = fmt(savedRemainingSec);
+    updateDiscOverallBar();
+    updateEffectiveRemainingUI();
+  }
+
+  function resetRemainingToFull(){
+    savedRemainingSec = discCapacitySeconds();
+    saveRemaining();
+    renderPlaylist();
+    updateNowPlaying();
+  }
+
+  function updateCapacityLine(){
+    const baseMin = parseInt(discLenSel.value, 10) || 80;
+    const modeStr = normMode();
+    const mult = modeMultiplier();
+    capLine.textContent = `${baseMin}:00 capacity (${modeStr}, ${mult}×)`;
+  }
+
+  function enableControls(enabled){
+    playBtn.disabled = !enabled;
+    pauseBtn.disabled = !enabled;
+    prevBtn.disabled = !enabled;
+    nextBtn.disabled = !enabled;
+    stopBtn.disabled = !enabled;
+    clearBtn.disabled = !enabled;
+    resetDiscBtn.disabled = !enabled;
+  }
+
+  function rebuildOrder(){
+    order = tracks.map((_, i) => i);
+    if (shuffleToggle.checked){
+      for (let i = order.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+    }
+  }
+
+  function updateTrackCount(){
+    trackCount.textContent = `${tracks.length} track${tracks.length===1?"":"s"}`;
+  }
+
+
+  function updateDiscOverallBar(){
+    const cap = discCapacitySeconds();
+    const rem = remainingForVisuals();
+    const used = Math.max(0, cap - rem);
+    const pct = cap > 0 ? Math.min(100, Math.max(0, (used / cap) * 100)) : 0;
+    if (discBar) discBar.style.width = pct.toFixed(1) + "%";
+    if (discUsageLine) discUsageLine.textContent = pct.toFixed(1) + "% used";
+    if (usedCapLine) usedCapLine.textContent = `${fmt(used)} / ${fmt(cap)}`;
+    updatePieChart();
+    updateTracksRemaining();
+  }
+
+
+  function updateTracksRemaining(){
+    if (!tracksRemainingLine) return;
+    if (tracks.length === 0 || order.length === 0 || currentPos < 0){
+      tracksRemainingLine.textContent = "0";
+      return;
+    }
+    // remaining after current track finishes
+    const remaining = Math.max(0, order.length - (currentPos + 1));
+    tracksRemainingLine.textContent = String(remaining);
+  }
+
+  function ensurePieResolution(){
+    if (!pie) return;
+    const rect = pie.getBoundingClientRect();
+    // If the canvas is hidden/collapsed, don't stomp dimensions.
+    if (!rect.width || !rect.height) return;
+    const dpr = window.devicePixelRatio || 1;
+    const nextW = Math.max(1, Math.floor(rect.width * dpr));
+    const nextH = Math.max(1, Math.floor(rect.height * dpr));
+    if (pie.width !== nextW) pie.width = nextW;
+    if (pie.height !== nextH) pie.height = nextH;
+  }
+
+  function updatePieChart(){
+    if (!pieCtx || !pie) return;
+    ensurePieResolution();
+    const cap = discCapacitySeconds();
+    const rem = remainingForVisuals();
+    const used = Math.max(0, cap - rem);
+    const usedFrac = cap > 0 ? Math.min(1, Math.max(0, used / cap)) : 0;
+
+    const w = pie.width, h = pie.height;
+    pieCtx.clearRect(0, 0, w, h);
+
+    const cx = w/2, cy = h/2;
+    const r = Math.min(w,h)/2 - 6;
+
+    // background ring
+    pieCtx.beginPath();
+    pieCtx.arc(cx, cy, r, 0, Math.PI*2);
+    pieCtx.fillStyle = "rgba(255,255,255,0.05)";
+    pieCtx.fill();
+
+    // used slice
+    const start = -Math.PI/2;
+    const end = start + usedFrac * Math.PI*2;
+
+    pieCtx.beginPath();
+    pieCtx.moveTo(cx, cy);
+    pieCtx.arc(cx, cy, r, start, end);
+    pieCtx.closePath();
+    pieCtx.fillStyle = "rgba(255,255,255,0.35)";
+    pieCtx.fill();
+
+    // inner cutout for donut
+    pieCtx.globalCompositeOperation = "destination-out";
+    pieCtx.beginPath();
+    pieCtx.arc(cx, cy, r*0.62, 0, Math.PI*2);
+    pieCtx.fill();
+    pieCtx.globalCompositeOperation = "source-over";
+
+    // center text
+    pieCtx.fillStyle = "rgba(255,255,255,0.85)";
+    pieCtx.font = `700 ${Math.floor(r*0.28)}px ${getComputedStyle(document.documentElement).getPropertyValue('--mono') || 'monospace'}`;
+    pieCtx.textAlign = "center";
+    pieCtx.textBaseline = "middle";
+    pieCtx.fillText((usedFrac*100).toFixed(0) + "%", cx, cy);
+
+    if (pieUsed) pieUsed.textContent = fmt(used);
+    if (pieRem) pieRem.textContent = fmt(rem);
+  }
+
+  // ---- Confetti (simple) ----
+  let confettiRAF = null;
+  let confettiParts = [];
+
+  function resizeConfetti(){
+    if (!confettiCanvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    confettiCanvas.width = Math.floor(window.innerWidth * dpr);
+    confettiCanvas.height = Math.floor(window.innerHeight * dpr);
+  }
+
+  function spawnConfetti(){
+    if (!confettiCanvas || !confettiCtx) return;
+    resizeConfetti();
+    const dpr = window.devicePixelRatio || 1;
+    const W = confettiCanvas.width, H = confettiCanvas.height;
+
+    confettiParts = [];
+    const N = 220;
+    for (let i=0;i<N;i++){
+      confettiParts.push({
+        x: Math.random()*W,
+        y: -Math.random()*H*0.4,
+        vx: (Math.random()-0.5) * 1.2 * dpr,
+        vy: (1.2 + Math.random()*2.8) * dpr,
+        s: (2 + Math.random()*6) * dpr,
+        rot: Math.random()*Math.PI*2,
+        vr: (Math.random()-0.5) * 0.14,
+        a: 0.65 + Math.random()*0.35
+      });
+    }
+  }
+
+  function drawConfetti(){
+    if (!confettiCanvas || !confettiCtx) return;
+    const W = confettiCanvas.width, H = confettiCanvas.height;
+    confettiCtx.clearRect(0,0,W,H);
+
+    confettiParts.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      p.vy *= 0.998;
+
+      // wrap
+      if (p.y > H + 40) p.y = -20;
+      if (p.x < -40) p.x = W + 40;
+      if (p.x > W + 40) p.x = -40;
+
+      confettiCtx.save();
+      confettiCtx.translate(p.x, p.y);
+      confettiCtx.rotate(p.rot);
+      confettiCtx.globalAlpha = p.a;
+      confettiCtx.fillStyle = "rgba(255,255,255,0.75)";
+      confettiCtx.fillRect(-p.s/2, -p.s/2, p.s, p.s*0.6);
+      confettiCtx.restore();
+    });
+
+    confettiRAF = requestAnimationFrame(drawConfetti);
+  }
+
+  function showCompleted(){
+    if (!completeOverlay) return;
+    completeOverlay.style.display = "grid";
+    spawnConfetti();
+    if (confettiRAF) cancelAnimationFrame(confettiRAF);
+    confettiRAF = requestAnimationFrame(drawConfetti);
+  }
+
+  function hideCompleted(){
+    if (!completeOverlay) return;
+    completeOverlay.style.display = "none";
+    if (confettiRAF){
+      cancelAnimationFrame(confettiRAF);
+      confettiRAF = null;
+    }
+    if (confettiCtx && confettiCanvas){
+      confettiCtx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+    }
+  }
+
+  function baseRemainingForEstimates(){
+    return (typeof savedRemainingSec === "number" && isFinite(savedRemainingSec)) ? savedRemainingSec : discCapacitySeconds();
+  }
+
+  // Computes remaining time used for bars/pie.
+  // Priority: manual (if enabled) else saved remaining; always subtracts pending session usage.
+  function remainingForVisuals(){
+    const cap = discCapacitySeconds();
+
+    // 1) If the Time Left field contains a valid time, use it immediately.
+    // This mirrors the proven v21-like behaviour and keeps Brave happy.
+    let base = null;
+    if (typeof manualRemain !== 'undefined' && manualRemain){
+      const typed = parseTimeInput(manualRemain.value);
+      if (typed !== null) base = typed;
+    }
+
+    // 2) Otherwise, fall back to the stored manual override (when Manual is ON)
+    if (base === null && useManualRemain && useManualRemain.checked && typeof manualRemainingSec === 'number' && isFinite(manualRemainingSec)){
+      base = manualRemainingSec;
+    }
+
+    // 3) Otherwise use the normal estimate base
+    if (base === null) base = baseRemainingForEstimates();
+
+    // Apply pending session usage consistently
+    const rem = Math.max(0, Math.min(cap, base - pendingUsedSec));
+    return rem;
+  }
+
+  function estimateRemainingAfterEach(){
+    const base = getBaseRemainingForChecks();
+    const gap = getGapSec();
+    const includeGap = includeGapChk.checked;
+
+    let used = 0;
+    const remainingByPos = [];
+    for (let pos = 0; pos < order.length; pos++){
+      const idx = order[pos];
+      const d = tracks[idx]?.durationSec;
+      const dur = (typeof d === "number" && isFinite(d) && d > 0) ? d : 0;
+      used += dur;
+      if (includeGap && pos < order.length - 1) used += gap;
+      remainingByPos[pos] = base - used;
+    }
+
+    const totalRemaining = remainingByPos.length ? remainingByPos[remainingByPos.length - 1] : base;
+    remainLine.textContent = fmt(Math.max(0, totalRemaining));
+
+    if (order.length === 0){
+      discPill.textContent = "DISC OK";
+      discPill.className = "pill mono";
+    } else if (totalRemaining >= 60){
+      discPill.textContent = "DISC OK";
+      discPill.className = "pill mono";
+    } else if (totalRemaining >= 0){
+      discPill.textContent = "TIGHT FIT";
+      discPill.className = "pill mono";
+    } else {
+      discPill.textContent = "OVER CAPACITY";
+      discPill.className = "pill mono";
+    }
+
+    return remainingByPos;
+  }
+
+  function renderPlaylist(){
+    playlistEl.innerHTML = "";
+    if (tracks.length === 0 || order.length === 0){
+      remainLine.textContent = fmt(getBaseRemainingForChecks());
+      return;
+    }
+
+    const remainingByPos = estimateRemainingAfterEach();
+
+    for (let pos = 0; pos < order.length; pos++){
+      const idx = order[pos];
+      const t = tracks[idx];
+      if (!t) continue;
+
+      const li = document.createElement('li');
+
+      const left = document.createElement('div');
+      const title = document.createElement('div');
+      title.className = "title";
+      title.textContent = t.name;
+
+      const durLine = document.createElement('div');
+      durLine.className = "small mono";
+      const durTxt = (typeof t.durationSec === "number" && isFinite(t.durationSec) && t.durationSec > 0) ? fmt(t.durationSec) : "??:??";
+      durLine.textContent = `#${pos+1} • ${durTxt}`;
+
+      left.appendChild(title);
+      left.appendChild(durLine);
+
+      const right = document.createElement('div');
+      right.className = "rightcol";
+
+      const rem = remainingByPos[pos];
+      const remTag = document.createElement('span');
+      remTag.className = "tag mono " + (rem >= 180 ? "remok" : rem >= 0 ? "remwarn" : "rembad");
+      remTag.textContent = `remaining: ${fmt(rem)}`;
+
+      const cur = document.createElement('span');
+      cur.className = "tag " + (pos === currentPos ? "current" : "");
+      cur.textContent = (pos === currentPos ? "CURRENT" : "READY");
+
+      right.appendChild(remTag);
+      right.appendChild(cur);
+
+      li.addEventListener('click', () => startAt(pos));
+
+      li.appendChild(left);
+      li.appendChild(right);
+      playlistEl.appendChild(li);
+    }
+  }
+
+  function updateNowPlaying(){
+    updateCapacityLine();
+    if (savedRemainingSec === null) loadSavedRemaining();
+
+    if (tracks.length === 0 || order.length === 0 || currentPos < 0){
+      nowPlaying.textContent = "No track loaded";
+      metaLine.textContent = "Drop files to begin.";
+      progressBar.style.width = "0%";
+      return;
+    }
+    const idx = order[currentPos];
+    const t = tracks[idx];
+    nowPlaying.textContent = t ? t.name : "…";
+
+    if (mode === "WAITING"){
+      const gap = getGapSec();
+      const remaining = Math.max(0, Math.ceil((waitingUntil - Date.now())/1000));
+      metaLine.textContent = `Waiting ${remaining}s before next track (gap set to ${gap}s).`;
+    } else {
+      metaLine.textContent = `${fmt(player.currentTime)} / ${fmt(player.duration)} • gap ${getGapSec()}s • ${discLenSel.value}min ${normMode()}`;
+    }
+
+    savedRemainLine.textContent = fmt(baseRemainingForEstimates());
+    updateDiscOverallBar();
+    updateEffectiveRemainingUI();
+  }
+
+  function loadTrackAt(pos){
+    if (pos < 0 || pos >= order.length) return false;
+    clearWait();
+    currentPos = pos;
+    const idx = order[pos];
+    const t = tracks[idx];
+    if (!t) return false;
+    player.src = t.url;
+    player.load();
+    renderPlaylist();
+    updateNowPlaying();
+    return true;
+  }
+
+  async function playCurrent(){
+    ensureAudioGraph();
+    try{
+      await player.play();
+      lastPlayTick = performance.now();
+      setMode("PLAYING");
+      startVisualizer();
+      updateNowPlaying();
+    }catch(e){
+      setMode("PAUSED");
+      updateNowPlaying();
+    }
+  }
+
+  function playAfterGap(){
+    clearWait();
+    const gap = getGapSec();
+    if (gap <= 0){
+      playCurrent();
+      return;
+    }
+    setMode("WAITING");
+    waitingUntil = Date.now() + gap*1000;
+    updateNowPlaying();
+    waitingTimer = setTimeout(() => {
+      waitingTimer = null;
+      waitingUntil = 0;
+      playCurrent();
+    }, gap*1000);
+  }
+
+  function startAt(pos){
+    if (!loadTrackAt(pos)) return;
+    playCurrent();
+  }
+
+  function nextTrack(auto=false){
+    if (tracks.length === 0 || order.length === 0) return;
+    clearWait();
+    let nextPos = currentPos + 1;
+    if (nextPos >= order.length){
+      if (loopToggle.checked) nextPos = 0;
+      else { stopPlayback(); return; }
+    }
+    loadTrackAt(nextPos);
+    auto ? playAfterGap() : playCurrent();
+  }
+
+  function prevTrack(){
+    if (tracks.length === 0 || order.length === 0) return;
+    clearWait();
+    let prevPos = currentPos - 1;
+    if (prevPos < 0) prevPos = loopToggle.checked ? order.length - 1 : 0;
+    loadTrackAt(prevPos);
+    playCurrent();
+  }
+
+  function stopPlayback(){
+    clearWait();
+    player.pause();
+    player.currentTime = 0;
+    setMode("IDLE");
+    stopVisualizer();
+    lastPlayTick = 0;
+    updateNowPlaying();
+    savePending();
+    updateEffectiveRemainingUI();
+  }
+
+  function clearAll(){
+    stopPlayback();
+    for (const t of tracks) if (t?.url) URL.revokeObjectURL(t.url);
+    tracks = [];
+    order = [];
+    currentPos = -1;
+    playlistEl.innerHTML = "";
+    fileInput.value = "";
+    enableControls(false);
+    setMode("IDLE");
+    updateTrackCount();
+    renderPlaylist();
+    updateNowPlaying();
+  }
+
+  // duration loading
+  function readDuration(file){
+    return new Promise((resolve) => {
+      const a = document.createElement('audio');
+      a.preload = "metadata";
+      const url = URL.createObjectURL(file);
+      a.src = url;
+
+      const done = (sec) => { URL.revokeObjectURL(url); resolve(sec); };
+
+      a.addEventListener('loadedmetadata', () => {
+        const d = a.duration;
+        done((typeof d === "number" && isFinite(d)) ? d : null);
+      }, { once: true });
+
+      a.addEventListener('error', () => done(null), { once: true });
+      a.load();
+    });
+  }
+
+  async function attachFiles(files){
+    const audioFiles = Array.from(files || []).filter(f => (f.type || "").startsWith("audio/"));
+    if (audioFiles.length === 0) return;
+
+    for (const t of tracks) if (t?.url) URL.revokeObjectURL(t.url);
+
+    tracks = audioFiles.map(f => ({ name:f.name, url:URL.createObjectURL(f), file:f, durationSec:null }));
+    rebuildOrder();
+    updateTrackCount();
+    enableControls(true);
+    if (savedRemainingSec === null) loadSavedRemaining();
+    renderPlaylist();
+
+    currentPos = 0;
+    loadTrackAt(0);
+
+    for (let i = 0; i < tracks.length; i++){
+      try{
+        const d = await readDuration(tracks[i].file);
+        tracks[i].durationSec = (typeof d === "number" && isFinite(d) && d > 0) ? d : null;
+      }catch(_){}
+      renderPlaylist();
+      updateNowPlaying();
+    }
+  }
+
+  // remove current track (after it plays)
+  function removeCurrentAndAdvance(){
+    if (!autoRemoveChk.checked) return false;
+    if (order.length === 0 || currentPos < 0) return false;
+
+    const idx = order[currentPos];
+    const t = tracks[idx];
+    if (t?.url) URL.revokeObjectURL(t.url);
+    tracks[idx] = null;
+    order.splice(currentPos, 1);
+
+    if (order.length === 0){
+      currentPos = -1;
+      renderPlaylist();
+      updateTrackCount();
+      return true;
+    }
+    if (currentPos >= order.length) currentPos = 0;
+    renderPlaylist();
+    updateTrackCount();
+    return true;
+  }
+
+  function decrementRemainingForJustPlayed(willHaveNext){
+    const cap = discCapacitySeconds();
+    if (savedRemainingSec === null) savedRemainingSec = cap;
+
+    const dur = (typeof player.duration === "number" && isFinite(player.duration)) ? player.duration : 0;
+    const gap = (includeGapChk.checked && willHaveNext) ? getGapSec() : 0;
+    savedRemainingSec = Math.max(0, savedRemainingSec - (Math.max(0, dur) + Math.max(0, gap)));
+    saveRemaining();
+  }
+
+  // drag & drop
+  const prevent = (e) => { e.preventDefault(); e.stopPropagation(); };
+
+  ["dragenter","dragover"].forEach(ev => {
+    dropZone.addEventListener(ev, (e) => { prevent(e); dropZone.classList.add("dragover"); });
+    document.addEventListener(ev, prevent);
+  });
+  ["dragleave","drop"].forEach(ev => {
+    dropZone.addEventListener(ev, (e) => { prevent(e); dropZone.classList.remove("dragover"); });
+    document.addEventListener(ev, prevent);
+  });
+
+  dropZone.addEventListener('drop', async (e) => {
+    const dt = e.dataTransfer;
+    if (!dt) return;
+    await attachFiles(dt.files);
+  });
+
+  fileInput.addEventListener('change', async () => {
+    await attachFiles(fileInput.files);
+  });
+
+  // controls
+  playBtn.addEventListener('click', () => { clearWait(); playCurrent(); });
+  pauseBtn.addEventListener('click', () => { clearWait(); player.pause(); lastPlayTick = 0; setMode("PAUSED"); updateNowPlaying(); savePending(); updateEffectiveRemainingUI(); });
+  nextBtn.addEventListener('click', () => nextTrack(false));
+  prevBtn.addEventListener('click', () => prevTrack());
+  stopBtn.addEventListener('click', () => stopPlayback());
+  clearBtn.addEventListener('click', () => clearAll());
+  resetDiscBtn.addEventListener('click', () => resetRemainingToFull());
+
+  if (closeCompleteBtn) closeCompleteBtn.addEventListener('click', hideCompleted);
+  if (completeOverlay) completeOverlay.addEventListener('click', (e) => { if (e.target === completeOverlay) hideCompleted(); });
+  window.addEventListener('resize', resizeConfetti);
+  // Keep the disk usage pie crisp and in-sync after resizes.
+  window.addEventListener('resize', () => updatePieChart());
+
+  if (labelTemplate) labelTemplate.addEventListener('change', () => { setLabelTemplate(); drawLabel(); });
+  [labelW, labelH, labelDpi, labelTitle, labelSubtitle, labelTitleSize, labelSubSize].forEach(el => {
+    if (el) el.addEventListener('input', () => drawLabel());
+  });
+  if (labelInvert) labelInvert.addEventListener('change', () => drawLabel());
+  if (renderLabelBtn) renderLabelBtn.addEventListener('click', () => drawLabel());
+  if (downloadLabelBtn) downloadLabelBtn.addEventListener('click', () => downloadLabel());
+  if (labelBgInput) labelBgInput.addEventListener('change', () => {
+    const f = labelBgInput.files && labelBgInput.files[0];
+    if (!f) return;
+    const url = URL.createObjectURL(f);
+    const img = new Image();
+    img.onload = () => { labelBgImg = img; URL.revokeObjectURL(url); drawLabel(); };
+    img.onerror = () => { URL.revokeObjectURL(url); };
+    img.src = url;
+  });
+
+  function onDiscSettingChanged(){
+    updateCapacityLine();
+    loadSavedRemaining();
+    loadPending();
+    loadManual();
+    updateEffectiveRemainingUI();
+    renderPlaylist();
+    updateNowPlaying();
+    updateDiscOverallBar();
+    updateEffectiveRemainingUI();
+  }
+
+  [discLenSel, mdModeSel].forEach(el => el.addEventListener('change', onDiscSettingChanged));
+  [gapInput, includeGapChk, autoRemoveChk].forEach(el => {
+    el.addEventListener('input', () => { renderPlaylist(); updateNowPlaying(); });
+    el.addEventListener('change', () => { renderPlaylist(); updateNowPlaying(); });
+  });
+
+  shuffleToggle.addEventListener('change', () => {
+    if (tracks.length === 0) return;
+    const currentIdx = currentPos >= 0 ? order[currentPos] : null;
+    rebuildOrder();
+    if (currentIdx !== null) currentPos = Math.max(0, order.indexOf(currentIdx));
+    renderPlaylist();
+  });
+
+  // progress
+  player.addEventListener('timeupdate', () => {
+    if (mode === "WAITING") return;
+    if (mode === "PLAYING"){
+      const now = performance.now();
+      if (lastPlayTick){
+        const dt = Math.max(0, Math.min(2000, now - lastPlayTick));
+        pendingUsedSec += dt/1000;
+        lastPlayTick = now;
+        if (!player._lastPendingSave || (now - player._lastPendingSave) > 1500){
+          player._lastPendingSave = now;
+          savePending();
+          updateEffectiveRemainingUI();
+        }
+      } else {
+        lastPlayTick = now;
+      }
+    }
+    const d = player.duration;
+    const t = player.currentTime;
+    if (isFinite(d) && d > 0){
+      progressBar.style.width = `${Math.min(100, (t/d)*100)}%`;
+    } else progressBar.style.width = "0%";
+    updateNowPlaying();
+  });
+
+  player.addEventListener('ended', () => {
+    if (tracks.length === 0 || order.length === 0) return;
+
+    const willHaveNext = (order.length > 1) || loopToggle.checked;
+    const dur = (typeof player.duration === "number" && isFinite(player.duration)) ? player.duration : 0;
+    const gap = (includeGapChk.checked && willHaveNext) ? getGapSec() : 0;
+    const committed = Math.max(0, dur) + Math.max(0, gap);
+    decrementRemainingForJustPlayed(willHaveNext);
+    pendingUsedSec = Math.max(0, pendingUsedSec - committed);
+    savePending();
+    updateEffectiveRemainingUI();
+
+    const removed = removeCurrentAndAdvance();
+
+    if (order.length === 0){
+      setMode("IDLE");
+      stopVisualizer();
+      updateNowPlaying();
+      showCompleted();
+      return;
+    }
+
+    // If not removing, we advance normally; if removing, currentPos already points to next
+    if (!removed){
+      const atEnd = (currentPos + 1) >= order.length;
+      if (atEnd && !loopToggle.checked){
+        setMode("IDLE");
+        stopVisualizer();
+        updateNowPlaying();
+        showCompleted();
+        return;
+      }
+      let nextPos = currentPos + 1;
+      if (nextPos >= order.length) nextPos = 0;
+      currentPos = nextPos;
+    }
+
+    loadTrackAt(currentPos);
+    playAfterGap();
+  });
+
+  // Visualizer
+  function ensureAudioGraph(){
+    if (audioCtx) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 512;
+    analyser.smoothingTimeConstant = 0.82;
+    freqBuf = new Uint8Array(analyser.frequencyBinCount);
+
+    srcNode = audioCtx.createMediaElementSource(player);
+    srcNode.connect(analyser);
+    analyser.connect(audioCtx.destination);
+  }
+
+  function resizeViz(){
+    const rect = vizCanvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    vizCanvas.width = Math.max(1, Math.floor(rect.width * dpr));
+    vizCanvas.height = Math.max(1, Math.floor(rect.height * dpr));
+  }
+
+  function drawViz(){
+    if (!analyser) return;
+    resizeViz();
+    analyser.getByteFrequencyData(freqBuf);
+
+    const w = vizCanvas.width;
+    const h = vizCanvas.height;
+    vizCtx.clearRect(0, 0, w, h);
+
+    const bars = 48;
+    const step = Math.max(1, Math.floor(freqBuf.length / bars));
+    const gap = Math.max(1, Math.floor(w / (bars * 22)));
+    const barW = Math.max(1, Math.floor((w - gap * (bars - 1)) / bars));
+
+    for (let i = 0; i < bars; i++){
+      const idx = i * step;
+      const v = freqBuf[idx] / 255;
+      const bh = Math.max(1, Math.floor(v * h));
+      const x = i * (barW + gap);
+      const y = h - bh;
+
+      vizCtx.globalAlpha = 0.55;
+      vizCtx.fillStyle = "rgba(255,255,255,0.35)";
+      vizCtx.fillRect(x, y, barW, bh);
+
+      vizCtx.globalAlpha = 0.18;
+      vizCtx.fillStyle = "rgba(255,255,255,0.75)";
+      vizCtx.fillRect(x, Math.max(0, y-1), barW, 2);
+    }
+    vizCtx.globalAlpha = 1;
+    vizRAF = requestAnimationFrame(drawViz);
+  }
+
+  function startVisualizer(){
+    if (vizRAF) return;
+    vizRAF = requestAnimationFrame(drawViz);
+  }
+
+  function stopVisualizer(){
+    if (vizRAF){
+      cancelAnimationFrame(vizRAF);
+      vizRAF = null;
+    }
+    resizeViz();
+    vizCtx.clearRect(0, 0, vizCanvas.width, vizCanvas.height);
+  }
+
+  window.addEventListener('resize', resizeViz);
+  window.addEventListener('beforeunload', () => { try{ savePending(); }catch(_){} });
+
+
+  // ---- Label Maker ----
+  let labelBgImg = null;
+
+  function setLabelTemplate(){
+    const t = labelTemplate ? labelTemplate.value : "front";
+    if (!labelW || !labelH) return;
+    if (t === "front"){ labelW.value = 68; labelH.value = 72; }
+    else if (t === "spine"){ labelW.value = 68; labelH.value = 12; }
+    // custom keeps current values
+  }
+
+  function mmToPx(mm, dpi){
+    return Math.max(1, Math.round((mm / 25.4) * dpi));
+  }
+
+  function resizeLabelCanvas(){
+    if (!labelCanvas || !labelCtx) return;
+    const mmW = parseFloat(labelW.value) || 68;
+    const mmH = parseFloat(labelH.value) || 72;
+    const dpi = parseFloat(labelDpi.value) || 300;
+    const pxW = mmToPx(mmW, dpi);
+    const pxH = mmToPx(mmH, dpi);
+    labelCanvas.width = pxW;
+    labelCanvas.height = pxH;
+    // CSS size stays responsive; canvas will scale down visually.
+  }
+
+  function drawLabel(){
+    if (!labelCanvas || !labelCtx) return;
+    resizeLabelCanvas();
+    const w = labelCanvas.width, h = labelCanvas.height;
+
+    // background
+    labelCtx.clearRect(0,0,w,h);
+    labelCtx.fillStyle = "rgba(0,0,0,1)";
+    labelCtx.fillRect(0,0,w,h);
+
+    if (labelBgImg){
+      // cover
+      const iw = labelBgImg.naturalWidth || labelBgImg.width;
+      const ih = labelBgImg.naturalHeight || labelBgImg.height;
+      const scale = Math.max(w/iw, h/ih);
+      const dw = iw*scale, dh = ih*scale;
+      const dx = (w - dw)/2, dy = (h - dh)/2;
+      labelCtx.globalAlpha = 0.95;
+      labelCtx.drawImage(labelBgImg, dx, dy, dw, dh);
+      labelCtx.globalAlpha = 1;
+    } else {
+      // subtle noir grain bands
+      labelCtx.globalAlpha = 0.08;
+      labelCtx.fillStyle = "#fff";
+      for (let y=0;y<h;y+=Math.max(6, Math.floor(h/120))){
+        if (Math.random() < 0.15) labelCtx.fillRect(0,y,w,1);
+      }
+      labelCtx.globalAlpha = 1;
+    }
+
+    // vignette
+    const grd = labelCtx.createRadialGradient(w*0.5,h*0.5,Math.min(w,h)*0.2, w*0.5,h*0.5,Math.max(w,h)*0.8);
+    grd.addColorStop(0, "rgba(0,0,0,0)");
+    grd.addColorStop(1, "rgba(0,0,0,0.55)");
+    labelCtx.fillStyle = grd;
+    labelCtx.fillRect(0,0,w,h);
+
+    const inv = !!(labelInvert && labelInvert.checked);
+    const mainColor = inv ? "rgba(0,0,0,0.92)" : "rgba(255,255,255,0.92)";
+    const shadow = inv ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.55)";
+
+    // text overlay
+    const titleText = (labelTitle && labelTitle.value || "").trim();
+    const subText = (labelSubtitle && labelSubtitle.value || "").trim();
+    const tSize = parseInt(labelTitleSize?.value || "22", 10);
+    const sSize = parseInt(labelSubSize?.value || "14", 10);
+
+    labelCtx.textAlign = "left";
+    labelCtx.textBaseline = "top";
+    labelCtx.shadowColor = shadow;
+    labelCtx.shadowBlur = Math.round(Math.max(2, w*0.01));
+    labelCtx.shadowOffsetY = Math.round(Math.max(1, h*0.008));
+
+    const pad = Math.round(Math.max(12, Math.min(w,h)*0.06));
+    const maxW = w - pad*2;
+
+    // Title
+    labelCtx.fillStyle = mainColor;
+    labelCtx.font = `800 ${Math.round(tSize * (w/800) * 12)}px system-ui, -apple-system, Segoe UI, Roboto, Arial`;
+    // scale font sanely: above formula too aggressive; instead use dpi-independent proportion:
+    labelCtx.font = `800 ${Math.round(Math.max(18, Math.min(90, tSize * (w/400))))}px system-ui, -apple-system, Segoe UI, Roboto, Arial`;
+    wrapText(labelCtx, titleText, pad, pad, maxW, Math.round(Math.max(20, Math.min(90, tSize * (w/400))) * 1.15));
+
+    // Subtitle
+    labelCtx.font = `600 ${Math.round(Math.max(12, Math.min(60, sSize * (w/500))))}px system-ui, -apple-system, Segoe UI, Roboto, Arial`;
+    const y2 = pad + Math.round(Math.max(18, Math.min(90, tSize * (w/400))) * 1.15) * 2;
+    wrapText(labelCtx, subText, pad, Math.min(h-pad, y2), maxW, Math.round(Math.max(14, Math.min(60, sSize * (w/500))) * 1.2));
+
+    labelCtx.shadowBlur = 0;
+    labelCtx.shadowOffsetY = 0;
+
+    if (labelHint) labelHint.textContent = `${labelCanvas.width}×${labelCanvas.height}px`;
+  }
+
+  function wrapText(ctx, text, x, y, maxWidth, lineHeight){
+    if (!text) return;
+    const words = text.split(/\s+/);
+    let line = "";
+    let yy = y;
+    for (let n=0;n<words.length;n++){
+      const testLine = line + words[n] + " ";
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && n > 0){
+        ctx.fillText(line.trim(), x, yy);
+        line = words[n] + " ";
+        yy += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    if (line.trim()) ctx.fillText(line.trim(), x, yy);
+  }
+
+  function downloadLabel(){
+    if (!labelCanvas) return;
+    const a = document.createElement('a');
+    a.download = 'minidisc_label.png';
+    a.href = labelCanvas.toDataURL('image/png');
+    a.click();
+  }
+
+
+  // ---- Matrix rain (lightweight) ----
+  const matrixCanvas = document.getElementById('matrixRain');
+  const mtx = matrixCanvas ? matrixCanvas.getContext('2d') : null;
+  let matrixCols = [];
+  let matrixLast = 0;
+
+  function resizeMatrix(){
+    if (!matrixCanvas || !mtx) return;
+    const dpr = window.devicePixelRatio || 1;
+    matrixCanvas.width = Math.floor(window.innerWidth * dpr);
+    matrixCanvas.height = Math.floor(window.innerHeight * dpr);
+
+    const colWidth = Math.max(10*dpr, 14*dpr);
+    const cols = Math.floor(matrixCanvas.width / colWidth);
+    matrixCols = new Array(cols).fill(0).map(() => Math.random() * matrixCanvas.height);
+    matrixCols._colWidth = colWidth;
+    mtx.font = `${Math.floor(14*dpr)}px ${getComputedStyle(document.documentElement).getPropertyValue('--mono') || 'monospace'}`;
+  }
+
+  function drawMatrix(ts){
+    if (!matrixCanvas || !mtx) return requestAnimationFrame(drawMatrix);
+    if (!matrixLast) matrixLast = ts;
+    const dt = ts - matrixLast;
+    matrixLast = ts;
+
+    // Only animate when matrix theme is active (saves CPU)
+    const active = (document.documentElement.getAttribute("data-theme") === "matrix");
+    if (!active){
+      mtx.clearRect(0,0,matrixCanvas.width, matrixCanvas.height);
+      return requestAnimationFrame(drawMatrix);
+    }
+
+    const W = matrixCanvas.width, H = matrixCanvas.height;
+    const dpr = window.devicePixelRatio || 1;
+
+    // Fade to create trails
+    mtx.fillStyle = "rgba(0, 0, 0, 0.12)";
+    mtx.fillRect(0,0,W,H);
+
+    const colW = matrixCols._colWidth || (14*dpr);
+    const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン";
+    for (let i=0;i<matrixCols.length;i++){
+      const x = i * colW;
+      const y = matrixCols[i];
+
+      const ch = chars.charAt(Math.floor(Math.random()*chars.length));
+      // neon green-ish with slight variation
+      mtx.fillStyle = "rgba(57, 255, 136, 0.85)";
+      mtx.fillText(ch, x, y);
+
+      // occasional brighter head
+      if (Math.random() < 0.02){
+        mtx.fillStyle = "rgba(200, 255, 220, 0.95)";
+        mtx.fillText(ch, x, y);
+      }
+
+      const speed = (18 + Math.random()*42) * dpr * (dt/16.7);
+      matrixCols[i] += speed;
+
+      if (matrixCols[i] > H + 40*dpr && Math.random() < 0.06){
+        matrixCols[i] = -Math.random()*200*dpr;
+      }
+    }
+
+    requestAnimationFrame(drawMatrix);
+  }
+
+  window.addEventListener('resize', resizeMatrix);
+
+
+  // init
+  enableControls(false);
+  setMode("IDLE");
+  updateTrackCount();
+  updateCapacityLine();
+  loadSavedRemaining();
+  loadPending();
+  loadManual();
+  updateEffectiveRemainingUI();
+  updateDiscOverallBar();
+  renderPlaylist();
+  updateNowPlaying();
+  updateTracksRemaining();
+  updatePieChart();
+  drawLabel();
+  resizeMatrix();
+  requestAnimationFrame(drawMatrix);
+})();
+</script>
+
+  <canvas id="matrixRain" style="position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0; transition: opacity 220ms ease;"></canvas>
+
+  <div class="crt-overlay"></div>
+
+</body>
+</html>
